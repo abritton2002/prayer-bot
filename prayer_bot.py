@@ -3,8 +3,12 @@ from discord.ext import tasks
 from discord import app_commands
 import json
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
-TOKEN = "MTM2NzQ3NjEyMzkxNDczNTY4Nw.GLnze6.S58hgVqqWBiSreuo9inpqc4FDQsVCqVEac_Axs"
+load_dotenv()
+
+TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 CHANNEL_ID = 1367468653531889689  # Replace with your Discord channel ID (an integer)
 PRAYER_FILE = "prayers.json"
 
