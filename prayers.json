@@ -9,5 +9,71 @@
       "tag": "alexbritton"
     },
     "date": "2025-05-02"
+  },
+  {
+    "id": 2,
+    "text": "continue to serve others at work and at home",
+    "status": "open",
+    "added_by": {
+      "id": 755574351583248384,
+      "display_name": "AlexB",
+      "tag": "alexbritton"
+    },
+    "date": "2025-05-04"
+  },
+  {
+    "id": 3,
+    "text": "extended family healing",
+    "status": "open",
+    "added_by": {
+      "id": 755574351583248384,
+      "display_name": "AlexB",
+      "tag": "alexbritton"
+    },
+    "date": "2025-05-04"
+  },
+  {
+    "id": 4,
+    "text": "sexual temptation",
+    "status": "open",
+    "added_by": {
+      "id": 434778641063215114,
+      "display_name": "Ksummz",
+      "tag": "kbturtle"
+    },
+    "date": "2025-05-04"
+  },
+  {
+    "id": 5,
+    "text": "Family issues",
+    "status": "open",
+    "added_by": {
+      "id": 434778641063215114,
+      "display_name": "Ksummz",
+      "tag": "kbturtle"
+    },
+    "date": "2025-05-04"
+  },
+  {
+    "id": 6,
+    "text": "Patience in waiting and preparing myself for the woman God wants me to be with",
+    "status": "open",
+    "added_by": {
+      "id": 434778641063215114,
+      "display_name": "Ksummz",
+      "tag": "kbturtle"
+    },
+    "date": "2025-05-04"
+  },
+  {
+    "id": 7,
+    "text": "Finishing strong to Graduation",
+    "status": "open",
+    "added_by": {
+      "id": 434778641063215114,
+      "display_name": "Ksummz",
+      "tag": "kbturtle"
+    },
+    "date": "2025-05-04"
   }
 ]
