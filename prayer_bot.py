@@ -7,20 +7,6 @@ import json
 from datetime import datetime
 from dotenv import load_dotenv
 import os
-from flask import Flask
-from threading import Thread
-
-# --- Keep Alive Web Server for Render ---
-app = Flask('')
-
-@app.route('/')
-def home():
-    return "PrayerBot is alive!"
-
-def run_web():
-    app.run(host='0.0.0.0', port=8080)
-
-Thread(target=run_web).start()
 
 # --- Bot Setup ---
 load_dotenv()
@@ -48,6 +34,7 @@ def save_prayers(data):
     with open(PRAYER_FILE, "w") as f:
         json.dump(data, f, indent=2)
 
+# --- Slash Command: Add Requests ---
 @tree.command(name="add_requests", description="Add one or more prayer requests (comma-separated)")
 async def add_requests(interaction: discord.Interaction, requests: str):
     prayers = load_prayers()
@@ -81,6 +68,7 @@ async def add_requests(interaction: discord.Interaction, requests: str):
             msg += f"• {p['text']}\n"
         await open_channel.send(msg)
 
+# --- Slash Command: Refresh Open Requests ---
 @tree.command(name="refresh_open_requests", description="Post all current open requests grouped by user")
 async def refresh_open_requests(interaction: discord.Interaction):
     prayers = load_prayers()
@@ -89,9 +77,7 @@ async def refresh_open_requests(interaction: discord.Interaction):
     for p in prayers:
         if p["status"] == "open":
             user = p["added_by"]["display_name"]
-            if user not in open_requests_by_user:
-                open_requests_by_user[user] = []
-            open_requests_by_user[user].append(p["text"])
+            open_requests_by_user.setdefault(user, []).append(p["text"])
 
     if not open_requests_by_user:
         await interaction.response.send_message("✅ No open prayer requests to refresh.")
@@ -110,6 +96,7 @@ async def refresh_open_requests(interaction: discord.Interaction):
 
     await interaction.response.send_message("🔄 Open requests refreshed in #requests-update.")
 
+# --- Interactive Dropdown to Mark Answered ---
 class PrayerDropdown(discord.ui.Select):
     def __init__(self, user_id, request):
         self.user_id = user_id
@@ -149,6 +136,7 @@ class PrayerDropdownView(discord.ui.View):
         for r in user_requests:
             self.add_item(PrayerDropdown(user_id, r))
 
+# --- Daily Summary with Dropdowns ---
 async def send_daily_prayer_summary():
     prayers = load_prayers()
     open_prayers = [p for p in prayers if p["status"] == "open"]
@@ -179,6 +167,7 @@ async def send_daily_prayer_summary():
 
         await summary_channel.send(block, view=view)
 
+# --- Startup ---
 @client.event
 async def on_ready():
     await tree.sync()
@@ -189,4 +178,8 @@ async def on_ready():
     scheduler.start()
     print("📅 Daily interactive summary scheduled at 7:00 AM.")
 
-client.run(TOKEN)
+# --- Keep Alive ---
+if __name__ == "__main__":
+    import keep_alive
+    keep_alive.start()
+    client.run(TOKEN)
